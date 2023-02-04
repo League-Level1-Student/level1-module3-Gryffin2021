@@ -56,6 +56,9 @@ public class Canvas {
     }
 
     public void addCircle(Circle circle) {
+    	
+    	System.out.println("circle radius = " + circle.radius);
+        System.out.println("circle color = " + circle.color);
         circles.add(circle);
 
         // Must place after adding new circle
