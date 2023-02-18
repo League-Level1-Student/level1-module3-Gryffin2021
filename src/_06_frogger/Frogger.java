@@ -6,8 +6,9 @@ import processing.core.PImage;
 public class Frogger extends PApplet {
     public static final int WIDTH = 844;
     static final int HEIGHT = 600;
-    int x = 300;
-    int y = 530;
+    int frogX = 300;
+    int frogY = 530;
+    int beans = 250;
     PImage back;
     PImage carLeft;
     PImage carRight;
@@ -28,13 +29,18 @@ public class Frogger extends PApplet {
        }
        public void draw() {
            background(back);
-           image (carLeft,250,360);
+           image (carLeft,beans,360);
            image (carRight,250, 210);
-           image (frog, x, y);
+           image (frog, frogX, frogY);
            outOfBounds();
            car1.display(this);
            car2.display(this);
-           
+           car1.moveLeft();
+           car2.moveRight();
+           car1.display(this);
+           car2.display(this);
+           intersects(car1);
+           intersects(car2);
        }
        public void keyPressed()
        {
@@ -42,37 +48,47 @@ public class Frogger extends PApplet {
                if(keyCode == UP)
                {
                    //Frog Y position goes up
-            	   y -= 10;
+            	   frogY -= 17;
                }
                else if(keyCode == DOWN)
                {
                    //Frog Y position goes down 
-            	   y += 10;
+            	   frogY += 17;
                }
                else if(keyCode == RIGHT)
                {
                    //Frog X position goes right
-            	   x += 10;
+            	   frogX += 17;
                }
                else if(keyCode == LEFT)
                {
                    //Frog X position goes left
-            	   x -= 10;
+            	   frogX -= 17;
                }
            }
            }
        public void outOfBounds()
        {
-    	   if(x >= WIDTH) {
-    		   x = 10;
-    	   }else if(x <= 0) {
-    		   x = WIDTH - 75;
-    	   }else if(y >= HEIGHT) {
-    		   y -= 10;
-    	   }else if(y <= 0) {
-    		   y += 10;
+    	   if(frogX >= WIDTH) {
+    		   frogX = 10;
+    	   }else if(frogX <= 0) {
+    		   frogX = WIDTH - 75;
+    	   }else if(frogY >= HEIGHT) {
+    		   frogY -= 10;
+    	   }else if(frogY <= 0) {
+    		   frogY += 10;
     	   }
        }
+       boolean intersects(Car car) {
+    	   if ((frogY > car.getY() && frogY < car.getY()+50) &&
+    	                  (frogX > car.getX() && frogX < car.getX()+car.getSize())) {
+    	     return true;
+    	    }
+    	   else  {
+    	    return false;
+    	   }
+       }
+       
        public static void main(String[] args) {
     	   PApplet.main(Frogger.class.getName());
 	}
