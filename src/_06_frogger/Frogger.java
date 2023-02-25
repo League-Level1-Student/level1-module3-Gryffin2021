@@ -8,7 +8,10 @@ public class Frogger extends PApplet {
     static final int HEIGHT = 600;
     int frogX = 300;
     int frogY = 530;
-    int beans = 250;
+    int cr = 422;
+    int cl = 422;
+    int cry = 360;
+    int cly = 210;
     PImage back;
     PImage carLeft;
     PImage carRight;
@@ -29,18 +32,32 @@ public class Frogger extends PApplet {
        }
        public void draw() {
            background(back);
-           image (carLeft,beans,360);
-           image (carRight,250, 210);
+           image (carRight,cl,360);
+           image (carLeft,cr, 210);
            image (frog, frogX, frogY);
            outOfBounds();
-           car1.display(this);
-           car2.display(this);
+           car1.display1(this,carLeft);
+           
            car1.moveLeft();
            car2.moveRight();
-           car1.display(this);
-           car2.display(this);
-           intersects(car1);
-           intersects(car2);
+           car1.display1(this,carLeft);
+          
+           if(intersects(car1)) {
+        	   frogX = 300;
+        	   frogY = 530;
+           }
+           if(intersects(car2)){
+        	   frogX = 300;
+        	   frogY = 530;
+           }
+           if(cr <= 0) {
+        	   cr = 844;
+           }
+           if(cl >= 844) {
+        	   cl = 0;
+           }
+           cr--;
+           cl++;
        }
        public void keyPressed()
        {
@@ -80,14 +97,15 @@ public class Frogger extends PApplet {
     	   }
        }
        boolean intersects(Car car) {
-    	   if ((frogY > car.getY() && frogY < car.getY()+50) &&
-    	                  (frogX > car.getX() && frogX < car.getX()+car.getSize())) {
+    	   if ((frogY > car.carY && frogY < car.carY+50) &&
+    	                  (frogX > car.carX && frogX < car.carX+car.getSize())) {
     	     return true;
     	    }
     	   else  {
     	    return false;
     	   }
-       }
+    	   }
+       
        
        public static void main(String[] args) {
     	   PApplet.main(Frogger.class.getName());

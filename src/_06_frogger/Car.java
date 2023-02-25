@@ -1,6 +1,7 @@
 package _06_frogger;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Car extends PApplet {
  public int carX = 0;
@@ -11,10 +12,9 @@ public class Car extends PApplet {
 	 this.carY = y;
 	 this.size = size;
  }
- void display(PApplet g)
+ void display1(PApplet g, PImage image)
  {
-   g.fill(0,255,0);
-   g.rect(carX , carY,  size, 50);
+	 image.set(carX, carY, image);
  }
  public void moveLeft() {
 	 	carX -= 10;
